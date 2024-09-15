@@ -1,0 +1,48 @@
+/* Paleta de colores */
+:root {
+    --rojo: #c8102e;
+    --negro: #000000;
+    --blanco: #FFFFFF;
+    --amarillo: #f2a900;
+    --cafe: #703f2a;
+    --azul: #151f6d;
+    --celeste: #0072ce;
+    --verde: #00965e;
+    --violeta: #8e3a80;
+    --gris: #888b8d;
+    --naranja: #FF671F;
+    --rosado: #E782A9;
+}
+
+/* Estilos globales */
+body {
+    background-color: var(--blanco);
+    color: var(--negro);
+}
+
+h1, h2, h3, h4 {
+    color: var(--rojo);
+}
+
+.table {
+    border-color: var(--negro);
+}
+
+.table th {
+    background-color: var(--rojo);
+    color: var(--blanco);
+}
+
+.table tr:nth-child(even) {
+    background-color: var(--gris);
+}
+
+.btn-primary {
+    background-color: var(--celeste);
+    border-color: var(--celeste);
+}
+
+.btn-danger {
+    background-color: var(--rojo);
+    border-color: var(--rojo);
+}

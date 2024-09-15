@@ -1,0 +1,4 @@
+com\mycompany\gestioncursos\modelos\Estudiante.class
+com\mycompany\gestioncursos\controladores\CursoControlador.class
+com\mycompany\gestioncursos\controladores\EstudianteControlador.class
+com\mycompany\gestioncursos\modelos\Curso.class
