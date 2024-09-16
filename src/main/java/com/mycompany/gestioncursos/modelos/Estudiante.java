@@ -2,46 +2,38 @@ package com.mycompany.gestioncursos.modelos;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
-@Table(name="estudiante")
-public class Estudiante implements Serializable{
+@Table(name = "estudiante")
+public class Estudiante implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(name = "nombre", nullable = false)
+
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
-    
-    @Column(name="email", nullable = false)
+
+    @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
-    
+
     @Column(name = "edad")
     private int edad;
-    
-    //relacion muchos a muchos con la clase curso
-    //se crea la tabla inscripcion para gestionar la relacion
-    //y cumplir con la tercera forma normal
-    @ManyToMany
+
+    // Relación muchos a muchos con la clase curso
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "inscripcion",
-        joinColumns = @JoinColumn(name = "estudiante_id"),
-        inverseJoinColumns = @JoinColumn(name = "curso_id")
+            name = "inscripcion",
+            joinColumns = @JoinColumn(name = "estudiante_id"),
+            inverseJoinColumns = @JoinColumn(name = "curso_id")
     )
-    
     private List<Curso> cursos;
 
-    //contructores
-    public Estudiante() {}
+    // Constructores
+    public Estudiante() {
+    }
 
     public Estudiante(String nombre, String email, int edad) {
         this.nombre = nombre;
@@ -49,7 +41,7 @@ public class Estudiante implements Serializable{
         this.edad = edad;
     }
 
-    //Accesadores y mutadores
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -81,7 +73,7 @@ public class Estudiante implements Serializable{
     public void setEdad(int edad) {
         this.edad = edad;
     }
-    
+
     public List<Curso> getCursos() {
         return cursos;
     }
@@ -89,5 +81,33 @@ public class Estudiante implements Serializable{
     public void setCursos(List<Curso> cursos) {
         this.cursos = cursos;
     }
-    
+
+    // Sobreescritura de equals y hashCode para evitar problemas en listas y comparaciones
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Estudiante that = (Estudiante) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    // Implementación del método toString para una mejor visualización del objeto
+    @Override
+    public String toString() {
+        return "Estudiante{"
+                + "id=" + id
+                + ", nombre='" + nombre + '\''
+                + ", email='" + email + '\''
+                + ", edad=" + edad
+                + '}';
+    }
 }

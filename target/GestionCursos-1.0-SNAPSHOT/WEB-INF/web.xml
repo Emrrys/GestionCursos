@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Configuraciones de los servlets -->
-
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	 version="3.1">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    
+    <!-- Configuración de Sesión -->
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout> <!-- Tiempo de espera en minutos -->
     </session-config>
+    
+    <!-- Servlet para el controlador de Estudiantes -->
+    <servlet>
+        <servlet-name>EstudianteControlador</servlet-name>
+        <servlet-class>com.mycompany.gestioncursos.controladores.EstudianteControlador</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>EstudianteControlador</servlet-name>
+        <url-pattern>/EstudianteControlador</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet para el controlador de Cursos -->
+    <servlet>
+        <servlet-name>CursoControlador</servlet-name>
+        <servlet-class>com.mycompany.gestioncursos.controladores.CursoControlador</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>CursoControlador</servlet-name>
+        <url-pattern>/CursoControlador</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -1,14 +1,35 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
     <persistence-unit name="GestionCursosPU">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        
+        <!-- Declaración de las entidades -->
         <class>com.mycompany.gestioncursos.modelos.Estudiante</class>
+        <class>com.mycompany.gestioncursos.modelos.Curso</class>
+        <class>com.mycompany.gestioncursos.modelos.Usuario</class> <!-- Asegúrate de incluir todas tus entidades -->
+        
         <properties>
+            <!-- Configuración de la conexión a la base de datos -->
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gestion_cursos"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            
+            <!-- Dialecto de Hibernate para MySQL -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            
+            <!-- Control del esquema de la base de datos -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/> <!-- Cambia a 'validate' o 'none' en producción -->
+            
+            <!-- Configuraciones adicionales -->
+            <property name="hibernate.show_sql" value="true"/> <!-- Muestra las consultas SQL en la consola -->
+            <property name="hibernate.format_sql" value="true"/> <!-- Formatea las consultas SQL para mayor legibilidad -->
+            
+            <!-- Configuración del pool de conexiones (opcional, puede mejorar el rendimiento) -->
+            <property name="hibernate.c3p0.min_size" value="5"/> <!-- Tamaño mínimo del pool de conexiones -->
+            <property name="hibernate.c3p0.max_size" value="20"/> <!-- Tamaño máximo del pool de conexiones -->
+            <property name="hibernate.c3p0.timeout" value="300"/> <!-- Tiempo de espera en segundos para liberar conexiones inactivas -->
+            <property name="hibernate.c3p0.max_statements" value="50"/> <!-- Número máximo de declaraciones preparadas en caché -->
+            <property name="hibernate.c3p0.idle_test_period" value="3000"/> <!-- Intervalo de pruebas para conexiones inactivas -->
         </properties>
     </persistence-unit>
 </persistence>

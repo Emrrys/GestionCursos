@@ -1,26 +1,62 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page session="true" %>
+<c:if test="${sessionScope.usuario == null}">
+    <script>
+        window.location.href = 'login.jsp';
+    </script>
+</c:if>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Listado de Estudiantes</title>
-
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=divice-width, initial-scale=1.0">
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Listado de Estudiantes</title>
         <!-- CDN de Bootstrap -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- CSS personalizados -->
-        <link href="styles.css" rel="stylesheet">
+        <!-- CSS personalizado -->
+        <link href="../css/styles.css" rel="stylesheet">
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <img src="../images/Logo_ipchile.png" alt="Logotipo de la empresa" class="mr-3" style="width:100px;">
+            <a class="navbar-brand ml-3" href="../index.jsp">Gestión de Cursos</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="estudiantes.jsp">Estudiantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cursos.jsp">Cursos</a>
+                    </li>
+                    <c:if test="${empty sessionScope.usuario}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.jsp">Login</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.usuario}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="CerrarSesion">Cerrar Sesión</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+
         <div class="container">
             <h1 class="text-center my-4">Listado de Estudiantes</h1>
-
+            <!-- Mostrar mensaje de éxito o error si existen -->
+            <c:if test="${not empty mensaje}">
+                <div class="alert alert-success">${mensaje}</div>
+            </c:if>
+            <c:if test="${not empty errorMensaje}">
+                <div class="alert alert-danger">${errorMensaje}</div>
+            </c:if>
+            
             <table class="table table-striped table-bordered">
-                <thead>
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
@@ -37,13 +73,24 @@
                             <td>${estudiante.email}</td>
                             <td>${estudiante.edad}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm">Editar</button>
-                                <button class="btn btn-danger btn-sm">Eliminar</button>
+                                <a href="EstudianteControlador?action=editar&id=${estudiante.id}" class="btn btn-primary btn-sm">Editar</a>
+                                <a href="EstudianteControlador?action=eliminar&id=${estudiante.id}" 
+                                   class="btn btn-danger btn-sm" 
+                                   onclick="return confirm('¿Está seguro que desea eliminar este estudiante?');">
+                                    Eliminar
+                                </a>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
+        </div>
+
+        <div class="container">
+            <h3>Eliminar Estudiantes No Inscritos en Ningún Curso</h3>
+            <form action="EstudianteControlador?action=eliminarNoInscritos" method="post">
+                <button type="submit" class="btn btn-danger">Eliminar Estudiantes No Inscritos</button>
+            </form>
         </div>
 
         <!-- Bootstrap JS and dependencies -->
